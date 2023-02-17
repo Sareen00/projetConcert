@@ -1,0 +1,21 @@
+{%  extends "base.html.twig" %}
+
+{% block titre %}Listes des Artistes{% endblock %}
+{%  block body %}
+    <div class="container">
+        <div class="card-deck">
+            {% for artist in artists %}
+                <div class="card">
+                    <img class="card-img-top" src="images/artist/{{ artist.getArtistPicture()}}" alt="Card image cap" style="width: 67mm; height: 14em;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ artist.getGroupName() }}</h5>
+                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+{% endblock %}
+

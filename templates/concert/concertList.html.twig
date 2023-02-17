@@ -1,0 +1,33 @@
+{%  extends "base.html.twig" %}
+
+{% block titre %}Listes des Concerts{% endblock %}
+{%  block body %}
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Artiste</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for concert in concerts %}
+                    <tr>
+                        <th scope="row">{{ concert.id }}</th>
+                        <td><a href="{{ path('concert_show',{id: concert.id}) }}">{{ concert.artist.getGroupName()}}</a></td>
+                        <td><button type="button" class="btn btn-danger">Supprimer</button></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div>
+            <a href="{{ path('concert_create') }}">Créer un nouveau concert ></a>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+

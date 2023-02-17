@@ -1,0 +1,16 @@
+{%  extends "base.html.twig" %}
+
+{% block titre %}Un Concert{% endblock %}
+
+
+{%  block body %}
+    <div class="container  d-flex justify-content-center mt-5">
+        <div class="card" style="width: 36rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{ concert.artist.getGroupName() }}</h5>
+                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
