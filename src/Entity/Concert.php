@@ -19,11 +19,11 @@ class Concert
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $sart_hour = null;
+    #[ORM\Column(name:"sart_hour",type: Types::TIME_MUTABLE)]
+    private ?\DateTimeInterface $sartHour = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $end_hour = null;
+    #[ORM\Column(name: "end_hour", type: Types::TIME_MUTABLE)]
+    private ?\DateTimeInterface $endHour = null;
 
     #[ORM\ManyToOne(inversedBy: 'concerts')]
     #[ORM\JoinColumn(nullable: false)]
@@ -61,24 +61,24 @@ class Concert
 
     public function getSartHour(): ?\DateTimeInterface
     {
-        return $this->sart_hour;
+        return $this->sartHour;
     }
 
-    public function setSartHour(\DateTimeInterface $sart_hour): self
+    public function setSartHour(\DateTimeInterface $sartHour): self
     {
-        $this->sart_hour = $sart_hour;
+        $this->sartHour = $sartHour;
 
         return $this;
     }
 
     public function getEndHour(): ?\DateTimeInterface
     {
-        return $this->end_hour;
+        return $this->endHour;
     }
 
-    public function setEndHour(\DateTimeInterface $end_hour): self
+    public function setEndHour(\DateTimeInterface $endHour): self
     {
-        $this->end_hour = $end_hour;
+        $this->endHour = $endHour;
 
         return $this;
     }

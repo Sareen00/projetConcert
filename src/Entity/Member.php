@@ -15,15 +15,15 @@ class Member
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 40, nullable: true)]
-    private ?string $member_lastname = null;
+    #[ORM\Column(name:'member_lastname',length: 40, nullable: true)]
+    private ?string $memberLastname = null;
 
     #[ORM\ManyToOne(inversedBy: 'members')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Artist $artist = null;
 
-    #[ORM\Column(length: 40)]
-    private ?string $member_firstname = null;
+    #[ORM\Column(name:'member_firstname',length: 40)]
+    private ?string $memberFirstname = null;
 
     #[ORM\Column(length: 80, nullable: true)]
     private ?string $picture = null;
@@ -38,12 +38,12 @@ class Member
 
     public function getMemberLastname(): ?string
     {
-        return $this->member_lastname;
+        return $this->memberLastname;
     }
 
-    public function setMemberLastname(?string $member_lastname): self
+    public function setMemberLastname(?string $memberLastname): self
     {
-        $this->member_lastname = $member_lastname;
+        $this->memberLastname = $memberLastname;
 
         return $this;
     }
@@ -62,12 +62,12 @@ class Member
 
     public function getMemberFirstname(): ?string
     {
-        return $this->member_firstname;
+        return $this->memberFirstname;
     }
 
-    public function setMemberFirstname(string $member_firstname): self
+    public function setMemberFirstname(string $memberFirstname): self
     {
-        $this->member_firstname = $member_firstname;
+        $this->memberFirstname = $memberFirstname;
 
         return $this;
     }

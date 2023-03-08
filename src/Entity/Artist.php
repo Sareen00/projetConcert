@@ -15,8 +15,8 @@ class Artist
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 40, nullable: true)]
-    private ?string $group_name = null;
+    #[ORM\Column(name:"group_name",length: 40, nullable: true)]
+    private ?string $groupName = null;
 
     #[ORM\OneToMany(mappedBy: 'artist', targetEntity: Member::class)]
     private Collection $members;
@@ -48,12 +48,12 @@ class Artist
 
     public function getGroupName(): ?string
     {
-        return $this->group_name;
+        return $this->groupName;
     }
 
-    public function setGroupName(?string $group_name): self
+    public function setGroupName(?string $groupName): self
     {
-        $this->group_name = $group_name;
+        $this->groupName = $groupName;
 
         return $this;
     }
