@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+
+{% block title %}Edit Member{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <h1>Edit Member</h1>
+
+    {{ include('member/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+    <a class="btn btn-secondary float-right"href="{{ path('artist_list') }}">Annuler</a>
+    </div>
+{% endblock %}

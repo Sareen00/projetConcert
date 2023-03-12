@@ -23,15 +23,18 @@ class Reservation
     private ?Concert $concert = null;
 
 
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?User $user = null;
+
+
     #[ORM\OneToOne(mappedBy: 'reservation', cascade: ['persist', 'remove'])]
     private ?Review $review = null;
 
 
 
     public function __construct()
-    {
-        $this->seats = new ArrayCollection();
-    }
+    {    }
 
     public function getId(): ?int
     {
@@ -62,29 +65,6 @@ class Reservation
         return $this;
     }
 
-    /**
-     * @return Collection<int, seat>
-     */
-    public function getSeats(): Collection
-    {
-        return $this->seats;
-    }
-
-    public function addSeat(seat $seat): self
-    {
-        if (!$this->seats->contains($seat)) {
-            $this->seats->add($seat);
-        }
-
-        return $this;
-    }
-
-    public function removeSeat(seat $seat): self
-    {
-        $this->seats->removeElement($seat);
-
-        return $this;
-    }
 
     public function getReview(): ?Review
     {

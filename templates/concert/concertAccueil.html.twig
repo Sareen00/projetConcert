@@ -1,0 +1,34 @@
+{%  extends "base.html.twig" %}
+
+{% block titre %}Concerts suivant{% endblock %}
+{%  block body %}
+    <div class="container">
+    <h2 class="my-3">Concert programmés<small> - dans les 2 mois suivants </small></h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Artiste</th>
+                    <th scope="col">Salle</th>
+                    <th scope="col">date</th>
+                    <th scope="col">Heure debut</th>
+                    <th scope="col">Heure fin</th>
+                </tr>              
+            </thead>
+            <tbody>
+                {% for concert in concerts %}
+                    <tr>
+                        <td><a href="{{ path('artist_show',{id: concert.artist.getId()}) }}">{{ concert.artist.getGroupName()}}</a></td>
+                        <td>N°{{ concert.room.getId()}}</td>
+                        <td>{{ concert.date.format('d/m/Y') }}</td>
+                        <td>{{ concert.sartHour.format('H:i:s') }}</td>
+                        <td>{{ concert.endHour.format('H:i:s') }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+
+
+

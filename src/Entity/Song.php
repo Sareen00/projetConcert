@@ -15,8 +15,8 @@ class Song
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 40)]
-    private ?string $song_name = null;
+    #[ORM\Column(name:"song_name",length: 40)]
+    private ?string $songName = null;
 
     #[ORM\ManyToMany(targetEntity: Preferences::class, inversedBy: 'songs')]
     private Collection $preferences;
@@ -41,12 +41,12 @@ class Song
 
     public function getSongName(): ?string
     {
-        return $this->song_name;
+        return $this->songName;
     }
 
-    public function setSongName(string $song_name): self
+    public function setSongName(string $songName): self
     {
-        $this->song_name = $song_name;
+        $this->songName = $songName;
 
         return $this;
     }

@@ -5,30 +5,39 @@
     <div class="container">
         <table class="table">
             <thead>
-            <tr>
-                <th scope="col">id</th>
-                <th scope="col">Artiste</th>
-                <th scope="col">Heure debut</th>
-                <th scope="col">Heure fin</th>
-                <th scope="col">Actions</th>
-            </tr>
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">Artiste</th>
+                    <th scope="col">Salle</th>
+                    <th scope="col">date</th>
+                    <th scope="col">Heure debut</th>
+                    <th scope="col">Heure fin</th>
+                    <th scope="col">Actions</th>
+                </tr>              
             </thead>
             <tbody>
                 {% for concert in concerts %}
                     <tr>
                         <th scope="row">{{ concert.id }}</th>
-                        <td><a href="{{ path('artist_show',{id: concert.artist.getId()}) }}">{{ concert.artist.getGroupName()}}</a></td>
+                        <td><a href="{{ path('detail_member_artist',{id: concert.artist.getId()}) }}">{{ concert.artist.getGroupName()}}</a></td>
+                        <td>N°{{ concert.room.getId()}}</td>
+                        <td>{{ concert.date.format('d/m/Y') }}</td>
                         <td>{{ concert.sartHour.format('H:i:s') }}</td>
                         <td>{{ concert.endHour.format('H:i:s') }}</td>
-                        <td><a class="btn btn-success mr-2" href="{{ path('concert_edit',{id: concert.id}) }}">Modifier</a><a class="btn btn-danger" href="{{ path('concert_delete',{id: concert.id}) }}">Supprimer</a></td>
+                            <td>
+                                <a class="btn btn-primary btn-sm mr-2" href="{{ path('concert_show',{id: concert.id}) }}">Détail</a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                                <a class="btn btn-info btn-sm mr-2" href="{{ path('concert_edit',{id: concert.id}) }}">Modifier</a>
+                                {# <a class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?');" href="{{ path('concert_delete',{id: concert.id}) }}">Supprimer</a> #}
+                        {% endif %}
+                            </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
-
-        <div>
-            <a href="{{ path('concert_create') }}">Créer un nouveau concert ></a>
-        </div>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a class="btn btn-success" href="{{ path('concert_create') }}">Ajouter</a>
+        {% endif %}
     </div>
 {% endblock %}
 

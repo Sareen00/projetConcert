@@ -4,14 +4,15 @@
 
 
 {%  block body %}
-<div class="container  d-flex justify-content-center mt-5">
-        <div class="card" style="width: 36rem;">
-            <img class="card-img-top" src="../images/artist/{{ artist.getArtistPicture()}}" alt="Card image cap" >
-            <div class="card-body">
-                <h5 class="card-title">{{ artist.getGroupName() }}</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        <div class="container justify-content-center mt-5">
+            <div class="card" style="width: 36rem;">
+                <img class="card-img-top" src="../images/artist/{{ artist.getArtistPicture()}}" alt="Card image cap" >
+                <div class="card-body">
+                    <h5 class="card-title">{{ artist.getGroupName() }}</h5>
+                    <p class="card-text">Date de naissance : </p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
             </div>
+            <a class="btn btn-secondary float-right" href="{{ path('artist_list') }}">Retour</a>
         </div>
-</div>
 {% endblock %}

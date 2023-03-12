@@ -1,21 +1,55 @@
-{%  extends "base.html.twig" %}
+{% extends "base.html.twig" %}
 
 {% block titre %}Listes des Artistes{% endblock %}
-{%  block body %}
-    <div class="container">
-        <div class="card-deck">
+{% block body %}
+    <div class="container mt-5">
+        <div class="row">
             {% for artist in artists %}
-                <div class="card">
-                    <img class="card-img-top" src="images/artist/{{ artist.getArtistPicture()}}" alt="Card image cap" style="width: 67mm; height: 14em;">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ artist.getGroupName() }}</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                <div class="col-md-3 mb-4">
+                    <div class="card" style="height: 350px;">
+                        <img class="card-img-top" style="height: 200px; width: 100%; object-fit: cover;" src="images/artist/{{ artist.getArtistPicture() }}" alt="Card image cap">
+                        <div class="card-body">
+                            <a class="card-title lien-special" href="{{ path('detail_member_artist',{id: artist.id}) }}">{{ artist.getGroupName() }}</a>
+                            <div class="row">
+                                {% for tag in artist.tags %}
+                                    <p class="mr-3 ml-2 mt-1 tags">#{{ tag.getTagName()}}</p>
+                                {% endfor %}
+                            </div>
+                            <div class="text-center mt-auto mt-2">
+                                {% if is_granted('ROLE_ADMIN') %}
+                                <a class="btn btn-info btn-sm" href="{{ path('artist_edit',{id: artist.id}) }}">Modifier</a>
+                                {# <a class="btn btn-danger btn-sm " onclick="return confirm('Êtes-vous sur de vouloir supprimer cet artiste ?');" href="{{ path('artist_delete',{id: artist.id}) }}">Supprimer</a> #}
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
+
                 </div>
+                {% if loop.index is divisible by(4) %}
+                    </div><div class="row">
+                {% endif %}
             {% endfor %}
-
         </div>
-    </div>
-{% endblock %}
 
+        {% if is_granted('ROLE_ADMIN') %}
+            <a class="btn btn-success mb-5" href="{{ path('artist_create') }}">Ajouter</a>
+        {% endif %}
+
+    </div>
+
+    <style>
+    .tags{
+        color:blue;
+    }
+
+    .lien-special {
+    text-decoration: none;
+    font-size: 1.5em;
+    color: #333;
+    }
+
+    .lien-special:hover {
+        color: #555;
+    }
+    </style>
+{% endblock %}

@@ -4,14 +4,36 @@ namespace App\Controller;
 
 use App\Entity\Concert;
 use App\Form\ConcertType;
+use App\Repository\ConcertRepository;
+use DateTime;
+use Doctrine\ORM\Query\Expr;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\Security\Core\Security;
 class ConcertController extends AbstractController
 {
+
+    #[Route('/', name: 'main')]
+    public function aex(ConcertRepository $concertRepository): Response
+    {
+        $startDate = new DateTime();
+        $endDate = new DateTime('+2 months');
+        
+        $prochainConcerts = $concertRepository->createQueryBuilder('concert')
+            ->andWhere('concert.date BETWEEN :startDate AND :endDate')
+            ->orderBy('concert.date', 'ASC')
+            ->setParameter('startDate', $startDate)
+            ->setParameter('endDate', $endDate)
+            ->getQuery()
+            ->getResult();
+    
+        return $this->render('concert/concertAccueil.html.twig', ['concerts' => $prochainConcerts]);
+    }
+    
+
     #[Route('/concert', name: 'concert_list')]
     public function showAllConcerts(ManagerRegistry $doctrine):Response
     {
@@ -30,18 +52,8 @@ class ConcertController extends AbstractController
     }
 
 
-    
-    #[Route('/concert/success', name: 'concert_success')]
-    public function successConcert():Response
-    {
-        return $this->render('concert/concertSuccess.html.twig');
-    }
 
-
-
-
-
-    #[Route('/concert/delete/{id}', name: 'concert_delete', requirements: ['id' => '\d+'])]
+    #[Route('/admin/concert/delete/{id}', name: 'concert_delete', requirements: ['id' => '\d+'])]
     public function deleteConcert(ManagerRegistry $doctrine,$id)
     {        
         $concert = new Concert();
@@ -55,7 +67,7 @@ class ConcertController extends AbstractController
 
 
 
-    #[Route('/concert/edit/{id}', name: 'concert_edit', requirements: ['id' => '\d+'])]
+    #[Route('/admin/concert/edit/{id}', name: 'concert_edit', requirements: ['id' => '\d+'])]
     public function editConcert(Request $request,ManagerRegistry $doctrine,$id)
     {        
 
@@ -71,7 +83,7 @@ class ConcertController extends AbstractController
             $entityManager->persist($concert);
             $entityManager->flush();
 
-            return $this->redirectToRoute('concert_success');
+            return $this->redirectToRoute('concert_list');
         }
 
         return $this->render('concert/concertNew.html.twig', [
@@ -79,12 +91,7 @@ class ConcertController extends AbstractController
         ]);
     }
 
-
-
-
-
-
-    #[Route('/concert/create', name: 'concert_create')]
+    #[Route('/admin/concert/create', name: 'concert_create')]
     public function createConcert(Request $request,ManagerRegistry $doctrine): Response
     {
         $concert = new Concert();
@@ -100,7 +107,7 @@ class ConcertController extends AbstractController
             $entityManager->persist($concert);
             $entityManager->flush();
 
-            return $this->redirectToRoute('concert_success');
+            return $this->redirectToRoute('concert_list');
         }
 
         return $this->render('concert/concertNew.html.twig', [

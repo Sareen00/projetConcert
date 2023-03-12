@@ -37,7 +37,6 @@ class TagFixtures extends Fixture implements DependentFixtureInterface
               ->addArtist($this->getReference(ArtistFixtures::EMINEM_ARTIST_REFERENCE))
               ->addArtist($this->getReference(ArtistFixtures::TUPAC_ARTIST_REFERENCE))
               ->addArtist($this->getReference(ArtistFixtures::PNL_ARTIST_REFERENCE));
-
         $manager->persist($tag3);
 
         $manager->flush();

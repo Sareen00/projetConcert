@@ -45,7 +45,6 @@ class ConcertFixtures extends Fixture implements DependentFixtureInterface
 
         $manager->flush();
 
-
         $this->addReference(self::CONCERT1_CONCERT_REFERENCE,$c1);
         $this->addReference(self::CONCERT2_CONCERT_REFERENCE,$c2);
         $this->addReference(self::CONCERT3_CONCERT_REFERENCE,$c3);

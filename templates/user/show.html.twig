@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello {{user.firstname}}{% endblock %}
+
+{% block body %}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="card-title mb-0">Mon compte</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-center mb-3">
+                        <img src="../../images/user/{{ user.getProfilepicture() }}" alt="Photo de profil" class="rounded-circle" width="150">
+                    </div>
+                    <a class="btn btn-danger mb-3" href="{{ path('edit_account',{id: user.id}) }}">Modifier</a>
+                    <ul class="list-group">
+                        <li class="list-group-item"><strong>Nom : </strong>{{user.lastname}}</li>
+                        <li class="list-group-item"><strong>Prénom : </strong>{{user.firstname}}</li>
+                        <li class="list-group-item"><strong>Email : </strong>{{user.email}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

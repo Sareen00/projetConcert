@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Member index{% endblock %}
+
+{% block body %}
+    <div class="container">
+
+        <h1>Liste de tout les membres</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">nom image</th>
+                    <th scope="col">Date de naissance</th>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <th scope="col">Actions</th>
+                    {% endif %}
+
+                </tr>
+            </thead>
+            <tbody>
+            {% for member in members %}
+                <tr>
+                    <td>{{ member.id }}</td>
+                    <td>{{ member.memberLastname }}</td>
+                    <td>{{ member.memberFirstname }}</td>
+                    <td>{{ member.picture }}</td>
+                    <td>{{ member.birthday ? member.birthday|date('Y-m-d') : '' }}</td>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td>
+                            <a class="btn btn-info mr-2" href="{{ path('app_member_edit', {'id': member.id}) }}">Modifier</a>
+                            <a class="btn btn-primary" href="{{ path('app_member_show', {'id': member.id}) }}">Détail</a>    
+                            {# <div class="mt-1">
+                                {{ include('member/_delete_form.html.twig') }}
+                            </div> #}
+                        </td>
+                    {% endif %}
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a class="btn btn-success mb-5" href="{{ path('app_member_new') }}">Ajouter</a>
+        {% endif %}
+    </div>
+{% endblock %}

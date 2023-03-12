@@ -1,15 +1,40 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Accueil</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="{{path('main')}}">Accueil</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="https://webinfo.iutmontp.univ-montp2.fr/~milhauj/concertProject/public/artist">Artistes</a>
+                {# <a class="nav-link" href="https://webinfo.iutmontp.univ-montp2.fr/~milhauj/concertProject/public/artist">Artistes</a> #}
+                <a class="nav-link" href="http://localhost/projetconcert/public/artist">Artistes</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="https://webinfo.iutmontp.univ-montp2.fr/~milhauj/concertProject/public/concert">Concerts</a>
+                <a class="nav-link" href="http://localhost/projetconcert/public/concert">Concerts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://localhost/projetconcert/public/member">Membres</a>
+            </li>
+            <li class="nav-item dropdown">
+                {% if app.user %}
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Bienvenue, {{ app.user.firstname }}
+                    </a>
+                {% else %}
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Login
+                    </a>
+                {% endif %}
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="http://localhost/projetconcert/public/register">Créé un compte</a>
+                {# {% if not app.user %} #}
+                    <a class="dropdown-item" href="http://localhost/projetconcert/public/sign-in">Se connecter</a>
+                {# {% endif %} #}
+                <div class="dropdown-divider"></div>
+                    {% if app.user %}
+                        <a class="dropdown-item" href="http://localhost/projetconcert/public/profile/compte/{{app.user.id}}">Gestion de son compte</a>
+                    {% endif %}
+                </div>
             </li>
         </ul>
     </div>

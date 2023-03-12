@@ -17,9 +17,7 @@ class ReservationFixtures extends Fixture implements DependentFixtureInterface
         $reservation1 = new Reservation();
         $reservation1 ->setPrice(130)
                       ->setUser($this->getReference(UserFixtures::USER1_USER_REFERENCE))
-                      ->setConcert($this->getReference(ConcertFixtures::CONCERT1_CONCERT_REFERENCE))
-                      ->addSeat($this->getReference(SeatFixtures::SEAT1_SONG_REFERENCE))
-                      ->addSeat($this->getReference(SeatFixtures::SEAT3_SONG_REFERENCE));
+                      ->setConcert($this->getReference(ConcertFixtures::CONCERT1_CONCERT_REFERENCE));
         $manager->persist($reservation1);
 
         $reservation2 = new Reservation();

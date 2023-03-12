@@ -14,15 +14,10 @@ class RoomFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $r1 = new Room();
-        $r1 ->setFloor(1)
-            ->setRoomNumber(3);
         $manager->persist($r1);
 
 
         $r2 = new Room();
-        $r2 ->setFloor(0)
-            ->setRoomNumber(1);
-
         $manager->persist($r2);
 
         $manager->flush();

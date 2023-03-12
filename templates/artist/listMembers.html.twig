@@ -1,0 +1,49 @@
+{%  extends "base.html.twig" %}
+
+{% block titre %}Listes des Artistes{% endblock %}
+{%  block body %}
+    <div class="container">
+        <h3 class="my-5">Liste des membres de {{artist.getGroupName()}}</h3>
+
+        <div class="card-deck">
+        {% for member in artist.members %}
+            <div class="card" style="max-width: 400px;">
+            <img class="card-img-top w-100 h-auto" src="../../images/membre/{{ member.getPicture()}}" alt="Card image cap" style="width: 80mm; height: 20em;">
+            <div class="card-body">
+                <h5 class="card-title">{{ member.getMemberLastname }} {{ member.getMemberFirstname() }}</h5>
+            </div>
+            </div>
+        {% endfor %}
+        </div>
+
+        <div class="mt-5">
+            {% if artist.concerts|length > 0 %}
+                <h3>Leur prochain concert</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Salle</th>
+                            <th scope="col">Heure debut</th>
+                            <th scope="col">Heure fin</th>
+                        </tr>              
+                    </thead>
+                    <tbody>
+                        {% for concert in artist.concerts %}
+                            <tr>
+                                <td>{{ concert.artist.getGroupName()}}</td>
+                                <td>N°{{ concert.room.getId()}}</td><!--amodifie avec la route de room-->
+                                <td>{{ concert.sartHour.format('H:i:s') }}</td>
+                                <td>{{ concert.endHour.format('H:i:s') }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>Aucun concert n'est programmé pour le moment.</p>
+            {% endif %}
+        </div>
+        <a class="btn btn-secondary float-right" href="{{ path('artist_list') }}">Retour</a>
+
+    </div>
+{% endblock %}
+

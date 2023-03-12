@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Artist;
 use App\Entity\Concert;
 use App\Entity\Playlist;
+use App\Entity\Room;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -31,6 +32,10 @@ class ConcertType extends AbstractType
                 'html5' => true,
                 'input' => 'datetime',
             ])
+            ->add('room',EntityType::class,[
+                'class' => Room::class,
+                'choice_label' => 'id'
+            ])
             ->add('artist',EntityType::class,[
                 'class' => Artist::class,
                 'choice_label' => 'groupName'
@@ -38,8 +43,7 @@ class ConcertType extends AbstractType
             ->add('playlist',EntityType::class,[
                 'class' => Playlist::class,
                 'choice_label' => 'id'
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -29,6 +29,9 @@ class Concert
     #[ORM\JoinColumn(nullable: false)]
     private ?Artist $artist = null;
 
+    #[ORM\ManyToOne(inversedBy: 'concerts')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Room $room = null;
 
     #[ORM\OneToMany(mappedBy: 'concert', targetEntity: Reservation::class)]
     private Collection $reservations;

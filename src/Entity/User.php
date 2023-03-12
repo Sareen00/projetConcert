@@ -3,19 +3,21 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 60)]
+    #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
     #[ORM\Column(length: 40, nullable: true)]
@@ -24,28 +26,17 @@ class User
     #[ORM\Column(length: 40, nullable: true)]
     private ?string $firstname = null;
 
-    #[ORM\Column(length: 40, nullable: true)]
-    private ?string $city = null;
+    #[ORM\Column(length: 80, nullable: true)]
+    private ?string $profilepicture = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $postal_code = null;
+    #[ORM\Column]
+    private array $roles = [];
 
-    #[ORM\Column(length: 60, nullable: true)]
-    private ?string $street = null;
-
-    #[ORM\Column(length: 40, nullable: true)]
-    private ?string $picture = null;
-
-    #[ORM\Column(length: 30)]
-    private ?string $role = null;
-
-
-
-    public function __construct()
-    {
-        $this->reservations = new ArrayCollection();
-        $this->preferences = new ArrayCollection();
-    }
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
+    private ?string $password = null;
 
     public function getId(): ?int
     {
@@ -88,123 +79,70 @@ class User
         return $this;
     }
 
-    public function getCity(): ?string
+
+    public function getProfilepicture(): ?string
     {
-        return $this->city;
+        return $this->profilepicture;
     }
 
-    public function setCity(?string $city): self
+        public function setProfilepicture(?string $profilepicture): self
     {
-        $this->city = $city;
+        $this->profilepicture = $profilepicture;
 
         return $this;
     }
 
-    public function getPostalCode(): ?int
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
     {
-        return $this->postal_code;
+        return (string) $this->email;
     }
 
-    public function setPostalCode(?int $postal_code): self
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
     {
-        $this->postal_code = $postal_code;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
 
-        return $this;
+        return array_unique($roles);
     }
 
-    public function getStreet(): ?string
+    public function setRoles(array $roles): self
     {
-        return $this->street;
-    }
-
-    public function setStreet(?string $street): self
-    {
-        $this->street = $street;
-
-        return $this;
-    }
-
-    public function getPicture(): ?string
-    {
-        return $this->picture;
-    }
-
-    public function setPicture(?string $picture): self
-    {
-        $this->picture = $picture;
-
-        return $this;
-    }
-
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
-
-    public function setRole(string $role): self
-    {
-        $this->role = $role;
+        $this->roles = $roles;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Reservation>
+     * @see PasswordAuthenticatedUserInterface
      */
-    public function getReservations(): Collection
+    public function getPassword(): string
     {
-        return $this->reservations;
+        return $this->password;
     }
 
-    public function addReservation(Reservation $reservation): self
+    public function setPassword(string $password): self
     {
-        if (!$this->reservations->contains($reservation)) {
-            $this->reservations->add($reservation);
-            $reservation->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReservation(Reservation $reservation): self
-    {
-        if ($this->reservations->removeElement($reservation)) {
-            // set the owning side to null (unless already changed)
-            if ($reservation->getUser() === $this) {
-                $reservation->setUser(null);
-            }
-        }
+        $this->password = $password;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Preferences>
+     * @see UserInterface
      */
-    public function getPreferences(): Collection
+    public function eraseCredentials()
     {
-        return $this->preferences;
-    }
-
-    public function addPreference(Preferences $preference): self
-    {
-        if (!$this->preferences->contains($preference)) {
-            $this->preferences->add($preference);
-            $preference->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removePreference(Preferences $preference): self
-    {
-        if ($this->preferences->removeElement($preference)) {
-            // set the owning side to null (unless already changed)
-            if ($preference->getUser() === $this) {
-                $preference->setUser(null);
-            }
-        }
-
-        return $this;
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 }

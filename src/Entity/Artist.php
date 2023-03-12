@@ -27,7 +27,7 @@ class Artist
     #[ORM\ManyToMany(targetEntity: Preferences::class, inversedBy: 'artists')]
     private Collection $preferences;
 
-    #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'artists')]
+    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'artists')]
     private Collection $tags;
 
     #[ORM\Column(length: 50, nullable: true)]

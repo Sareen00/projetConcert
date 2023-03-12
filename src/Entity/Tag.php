@@ -15,8 +15,8 @@ class Tag
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 40)]
-    private ?string $tag_name = null;
+    #[ORM\Column(name:"tag_name",length: 40)]
+    private ?string $tagName = null;
 
     #[ORM\ManyToMany(targetEntity: Preferences::class, inversedBy: 'tags')]
     private Collection $preferences;
@@ -24,7 +24,7 @@ class Tag
     #[ORM\ManyToMany(targetEntity: Song::class, mappedBy: 'tags')]
     private Collection $songs;
 
-    #[ORM\ManyToMany(targetEntity: Artist::class, inversedBy: 'tags')]
+    #[ORM\ManyToMany(targetEntity: Artist::class, mappedBy: 'tags')]
     private Collection $artists;
 
     public function __construct()
@@ -41,12 +41,12 @@ class Tag
 
     public function getTagName(): ?string
     {
-        return $this->tag_name;
+        return $this->tagName;
     }
 
-    public function setTagName(string $tag_name): self
+    public function setTagName(string $tagName): self
     {
-        $this->tag_name = $tag_name;
+        $this->tagName = $tagName;
 
         return $this;
     }
@@ -114,6 +114,7 @@ class Tag
     {
         if (!$this->artists->contains($artist)) {
             $this->artists->add($artist);
+            $artist->addTag($this);
         }
 
         return $this;
@@ -121,8 +122,9 @@ class Tag
 
     public function removeArtist(Artist $artist): self
     {
-        $this->artists->removeElement($artist);
-
+        if ($this->artists->removeElement($artist)) {
+            $artist->removeTag($this);
+        }
         return $this;
     }
 }

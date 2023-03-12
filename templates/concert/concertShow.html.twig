@@ -1,16 +1,23 @@
-{%  extends "base.html.twig" %}
+{% extends "base.html.twig" %}
 
-{% block titre %}Un Concert{% endblock %}
+{% block title %}{{ concert.artist.getGroupName() }} en concert{% endblock %}
 
+{% block body %}
 
-{%  block body %}
-    <div class="container  d-flex justify-content-center mt-5">
-        <div class="card" style="width: 36rem;">
-            <div class="card-body">
-                <h5 class="card-title">{{ concert.artist.getGroupName() }}</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-            </div>
-        </div>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6">
+      <img src="../../public/images/artist/{{  concert.artist.getArtistPicture() }}" alt="Photo de l'artiste" class="img-fluid">
     </div>
+    <div class="col-md-6">
+    <h2>{{ concert.artist.getGroupName() }}</h2>
+        <p>Date : {{ concert.date.format('d/m/Y') }}</p>
+        <p>Heure de début : {{ concert.sartHour.format('H:i:s') }}</p>
+        <p>Heure de fin : {{ concert.endHour.format('H:i:s') }}</p>
+        {# <p>Prix : {{ concert.price }} €</p> #}
+        {# <a href="{{ path('reservation', {'id': concert.id}) }}" class="btn btn-primary">Réserver</a> #}
+        <a class="btn btn-secondary float-left" href="{{ path('concert_list') }}">Retour</a>
+    </div>
+  </div>
+</div>
 {% endblock %}
