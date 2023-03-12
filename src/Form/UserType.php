@@ -28,7 +28,6 @@ class UserType extends AbstractType
                 'mapped' => false,
                 'required' => false
             ])
-            ->add('password',PasswordType::class)
         ;
     }
 

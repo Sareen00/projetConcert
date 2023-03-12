@@ -68,6 +68,7 @@ class ArtistController extends AbstractController
 
                 $artist->setArtistPicture($fileName);
             }
+
             $memberRepository->save($artist, true);
             return $this->redirectToRoute('artist_list');
         }
@@ -85,6 +86,24 @@ class ArtistController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $file = $form->get('artistPicture')->getData();
+
+            if ($file) {
+                $fileName = uniqid().'.'.$file->guessExtension();
+                $directory = __DIR__.'/../../public/images/artist/';
+                try {
+                    $file->move(
+                        $directory,
+                        $fileName
+                    );
+                } catch (FileException $e) {
+                    // Handle exception if something goes wrong during file upload
+                }
+
+                $artist->setArtistPicture($fileName);
+            }
+
             $artistRepository->save($artist, true);
 
             return $this->redirectToRoute('artist_list');

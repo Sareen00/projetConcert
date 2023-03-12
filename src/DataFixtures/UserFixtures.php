@@ -27,7 +27,7 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $user1 = new User();
-        $user1  ->setEmail("email1@gmail.com")
+        $user1  ->setEmail("email@gmail.com")
                 ->setLastname("Milhau")
                 ->setFirstname("Julien")
                 ->setPassword('azerty')
@@ -40,7 +40,7 @@ class UserFixtures extends Fixture
         $manager->persist($user1);
 
         $user2 = new User();
-        $user2  ->setEmail("1rokvar1@gmail.com")
+        $user2  ->setEmail("utilisateur@gmail.com")
                 ->setLastname("Donnadieu")
                 ->setFirstname("Jade")
                 ->setPassword($this->passwordHasher->hashPassword(

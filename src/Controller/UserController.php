@@ -31,8 +31,6 @@ class UserController extends AbstractController
     
         if ($form->isSubmitted() && $form->isValid()) {
     
-          // Handle file upload
-            /** @var UploadedFile $file */
             $file = $form->get('profilepicture')->getData();
 
             if ($file) {
@@ -49,11 +47,6 @@ class UserController extends AbstractController
 
                 $user->setProfilepicture($fileName);
             }
-    
-    
-    
-    
-    
     
             $userRepository->save($user, true);
     
