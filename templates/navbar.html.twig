@@ -7,13 +7,13 @@
         <ul class="navbar-nav">
             <li class="nav-item">
                 {# <a class="nav-link" href="https://webinfo.iutmontp.univ-montp2.fr/~milhauj/concertProject/public/artist">Artistes</a> #}
-                <a class="nav-link" href="http://localhost/projetconcert/public/artist">Artistes</a>
+                <a class="nav-link" href="{{ path('artist_list') }}">Artistes</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="http://localhost/projetconcert/public/concert">Concerts</a>
+                <a class="nav-link" href="{{ path('concert_list') }}>Concerts</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="http://localhost/projetconcert/public/member">Membres</a>
+                <a class="nav-link" href="{{ path('app_member_index') }}>Membres</a>
             </li>
             <li class="nav-item dropdown">
                 {% if app.user %}
@@ -26,13 +26,13 @@
                     </a>
                 {% endif %}
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="http://localhost/projetconcert/public/register">Créé un compte</a>
+                <a class="dropdown-item" href="{{ path('app_register') }}">Créé un compte</a>
                 {# {% if not app.user %} #}
-                    <a class="dropdown-item" href="http://localhost/projetconcert/public/sign-in">Se connecter</a>
+                    <a class="dropdown-item" href="{{ path('app_sign_in') }}">Se connecter</a>
                 {# {% endif %} #}
                 <div class="dropdown-divider"></div>
                     {% if app.user %}
-                        <a class="dropdown-item" href="http://localhost/projetconcert/public/profile/compte/{{app.user.id}}">Gestion de son compte</a>
+                        <a class="dropdown-item" href="{{ path('edit_account',{id: app.user.id}) }}">Gestion de son compte</a>
                     {% endif %}
                 </div>
             </li>
